@@ -1,0 +1,6 @@
+.*
+!/.gitignore*
+task/terraform.tfstate*
+task/terraform.tfvars
+task/keys/*
+task/.*
