@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "kf_igw" {
 #creating NACL
 resource "aws_network_acl" "kf_nacl" {
     vpc_id = "${aws_vpc.kf_vpc.id}"
-    subnet_ids = ["${aws_subnet.kf_public_subnet1.id}"]
+    subnet_ids = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
     egress {
         protocol = "-1"
         rule_no = 100
@@ -57,8 +57,8 @@ resource "aws_network_acl" "kf_nacl" {
         rule_no = 120
         action = "allow"
         cidr_block = "0.0.0.0/0"
-        from_port = 32768
-        to_port = 60999
+        from_port = 1024
+        to_port = 65535
     }
 
     tags {
@@ -76,20 +76,37 @@ resource "aws_route_table" "kf_route" {
 }
 
 #creating ROUTE TABLE ASSOCIATION
-resource "aws_route_table_association" "kf_route_table_association" {
+resource "aws_route_table_association" "kf_route_table_association1" {
   subnet_id      = "${aws_subnet.kf_public_subnet1.id}"
   route_table_id = "${aws_route_table.kf_route.id}"
 }
 
+#creating ROUTE TABLE ASSOCIATION
+resource "aws_route_table_association" "kf_route_table_association2" {
+  subnet_id      = "${aws_subnet.kf_public_subnet2.id}"
+  route_table_id = "${aws_route_table.kf_route.id}"
+}
 
-#creating SUBNET
+#creating SUBNET1
 resource "aws_subnet" "kf_public_subnet1" {
     vpc_id = "${aws_vpc.kf_vpc.id}"
-    cidr_block = "10.0.0.0/16"
+    cidr_block = "10.0.0.0/24"
     tags = {
         "Name" ="kf_public_subnet1"
     }
     map_public_ip_on_launch = true
+    availability_zone = "us-east-1a"
+}
+
+#creating SUBNET2
+resource "aws_subnet" "kf_public_subnet2" {
+    vpc_id = "${aws_vpc.kf_vpc.id}"
+    cidr_block = "10.0.1.0/24"
+    tags = {
+        "Name" ="kf_public_subnet2"
+    }
+    map_public_ip_on_launch = true
+    availability_zone = "us-east-1b"
 }
 
 #creating SECURITY GROUP
@@ -125,10 +142,15 @@ resource "aws_security_group" "kf_security_group" {
 resource "aws_elb" "kf_elb" {
     name = "kf-elb"
 
-    subnets         = ["${aws_subnet.kf_public_subnet1.id}"]
+    subnets         = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
     security_groups = ["${aws_security_group.kf_security_group.id}"]
-    instances       = ["${aws_instance.kf_inst1.id}"]
-
+    instances       = ["${aws_instance.kf_inst1.id}","${aws_instance.kf_inst2.id}"]
+    cross_zone_load_balancing   = true
+    access_logs {
+        bucket        = "kf_S3"
+ #       bucket_prefix = "bar"
+        interval      = 60
+    }
     listener {
         instance_port     = 80
         instance_protocol = "http"
@@ -137,12 +159,20 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
+resource "aws_s3_bucket" "kf_S3" {
+    bucket = "filatko-test-bucket1"
+    acl    = "private"
+    tags {
+        Name        = "kf_S3"
+    }
+}
+
 resource "aws_key_pair" "kf_key_pair" {
     key_name   = "${var.key_name}"
     public_key = "${file(var.public_key_path)}"
 }
 
-#creating INSTANCE
+#creating INSTANCE1
 resource "aws_instance" "kf_inst1" {
     key_name = "${var.key_name}"
     connection = {
@@ -156,17 +186,48 @@ resource "aws_instance" "kf_inst1" {
     }
     vpc_security_group_ids = ["${aws_security_group.kf_security_group.id}"]
     subnet_id = "${aws_subnet.kf_public_subnet1.id}"
-#    user_data = "${file("kfdata.sh")}"
+    provisioner "file" {
+        source      = "html/nginx_homepage_1.html"
+        destination = "/home/ubuntu/nginx_homepage_1.html"
+    } 
     provisioner "remote-exec" {
         inline = [
             "sudo apt-get -y update",
             "sudo apt-get -y install nginx",
             "sudo service nginx start",
+            "sudo mv /home/ubuntu/nginx_homepage_1.html /var/www/html/index.nginx-debian.html"
         ]
     }
 }
 
+#creating INSTANCE2
+resource "aws_instance" "kf_inst2" {
+    key_name = "${var.key_name}"
+    connection = {
+        user = "ubuntu"
+        private_key = "${file(var.private_key_path)}"
+    }
+    ami           = "${var.amis["us-east-1"]}"
+    instance_type = "t2.micro"
+    tags {  
+        Name = "kf_inst2"
+    }
+    vpc_security_group_ids = ["${aws_security_group.kf_security_group.id}"]
+    subnet_id = "${aws_subnet.kf_public_subnet2.id}"
+    provisioner "file" {
+        source      = "html/nginx_homepage_2.html"
+        destination = "/home/ubuntu/nginx_homepage_2.html"
+    }    
+    provisioner "remote-exec" {
+        inline = [
+            "sudo apt-get -y update",
+            "sudo apt-get -y install nginx",
+            "sudo service nginx start",
+            "sudo mv /home/ubuntu/nginx_homepage_2.html /var/www/html/index.nginx-debian.html"
+        ]
+    }
 
+}
 
 
 
