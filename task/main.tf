@@ -147,9 +147,9 @@ resource "aws_elb" "kf_elb" {
     instances       = ["${aws_instance.kf_inst1.id}","${aws_instance.kf_inst2.id}"]
     cross_zone_load_balancing   = true
     access_logs {
-        bucket        = "kf_S3"
+        bucket        = "kf_S3_logging"
  #       bucket_prefix = "bar"
-        interval      = 60
+        interval      = 5
     }
     listener {
         instance_port     = 80
@@ -159,12 +159,39 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
-resource "aws_s3_bucket" "kf_S3" {
-    bucket = "filatko-test-bucket1"
-    acl    = "private"
+resource "aws_s3_bucket" "kf_S3_logging" {
+    bucket = "kf_S3_logging"
+    force_destroy = true
     tags {
-        Name        = "kf_S3"
+        Name        = "kf_S3_logging"
     }
+    # logging {
+    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
+    #     target_prefix = "log/"
+    # }
+}
+
+resource "aws_s3_bucket_policy" "kf_S3_logging" {
+    bucket = "${aws_s3_bucket.kf_S3_logging.id}"
+    policy =<<POLICY
+{
+  "Id": "Policy1510836277408",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1510836271067",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::kf_S3_logging/*",
+      "Principal": {
+        "AWS": [
+          "127311923021"
+        ]
+      }
+    }
+  ]
+}
+POLICY
 }
 
 resource "aws_key_pair" "kf_key_pair" {
@@ -226,10 +253,11 @@ resource "aws_instance" "kf_inst2" {
             "sudo mv /home/ubuntu/nginx_homepage_2.html /var/www/html/index.nginx-debian.html"
         ]
     }
-
 }
 
-
+output "ip" {
+ value = "${aws_elb.kf_elb.dns_name}"
+}
 
 
 

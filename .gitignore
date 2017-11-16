@@ -1,3 +1,4 @@
+task/crash.log
 task/terraform.tfstate*
 task/terraform.tfvars
 task/keys/*
