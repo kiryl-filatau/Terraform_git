@@ -4,7 +4,7 @@ provider "aws" {
     region     = "${var.region}"
 }
 
-#creating VPC 
+#creating VPC +
 resource "aws_vpc" "kf_vpc" {
     cidr_block = "10.0.0.0/16"
     tags {
@@ -12,7 +12,7 @@ resource "aws_vpc" "kf_vpc" {
     }
 }
 
-#creating INTERNET GATEWAY
+#creating INTERNET GATEWAY +
 resource "aws_internet_gateway" "kf_igw" {
     vpc_id = "${aws_vpc.kf_vpc.id}"
     tags = {
@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "kf_igw" {
     }
 }
 
-#creating NACL
+#creating NACL +
 resource "aws_network_acl" "kf_nacl" {
     vpc_id = "${aws_vpc.kf_vpc.id}"
     subnet_ids = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
@@ -66,7 +66,7 @@ resource "aws_network_acl" "kf_nacl" {
     }
 }
 
-#creating ROUTE TABLES
+#creating ROUTE TABLES+
 resource "aws_route_table" "kf_route" {
     vpc_id = "${aws_vpc.kf_vpc.id}"
     route {
@@ -75,13 +75,13 @@ resource "aws_route_table" "kf_route" {
     }
 }
 
-#creating ROUTE TABLE ASSOCIATION
+#creating ROUTE TABLE ASSOCIATION+
 resource "aws_route_table_association" "kf_route_table_association1" {
   subnet_id      = "${aws_subnet.kf_public_subnet1.id}"
   route_table_id = "${aws_route_table.kf_route.id}"
 }
 
-#creating ROUTE TABLE ASSOCIATION
+#creating ROUTE TABLE ASSOCIATION+
 resource "aws_route_table_association" "kf_route_table_association2" {
   subnet_id      = "${aws_subnet.kf_public_subnet2.id}"
   route_table_id = "${aws_route_table.kf_route.id}"

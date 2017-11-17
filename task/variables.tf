@@ -19,3 +19,18 @@ variable "public_key_path" {
 variable "private_key_path" {
   default = "/home/kfilatau/EPAM/LEARN/Amazon/keys/N_Virginia_filatko.pem"
 }
+# VPC variables
+variable "vpc_name" { default = "kf_vpc"}
+variable "kf_vpc_cidr" { default = "10.0.0.0/16"}
+
+#IGW variables
+variable "igw_name" {default = "kf_igw"}
+variable "igw_id" {}
+
+#NACL variables
+variable "nacl_name" {default = "kf_nacl"}
+variable "nacl_cidr" {default = "0.0.0.0/0"}
+
+#RT variables
+variable "rt_cidr" {default = "0.0.0.0/0"}
+variable "kf_route_id" {}
