@@ -145,6 +145,7 @@ resource "aws_elb" "kf_elb" {
     subnets         = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
     security_groups = ["${aws_security_group.kf_security_group.id}"]
     instances       = ["${aws_instance.kf_inst1.id}","${aws_instance.kf_inst2.id}"]
+    depends_on      = ["aws_s3_bucket.kf_S3_logging"]
     cross_zone_load_balancing   = true
     access_logs {
         bucket        = "kf_S3_logging"
@@ -159,20 +160,9 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
-resource "aws_s3_bucket" "kf_S3_logging" {
-    bucket = "kf_S3_logging"
-    force_destroy = true
-    tags {
-        Name        = "kf_S3_logging"
-    }
-    # logging {
-    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
-    #     target_prefix = "log/"
-    # }
-}
-
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
     bucket = "${aws_s3_bucket.kf_S3_logging.id}"
+
     policy =<<POLICY
 {
   "Id": "Policy1510836277408",
@@ -192,6 +182,18 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
   ]
 }
 POLICY
+}
+
+resource "aws_s3_bucket" "kf_S3_logging" {
+    bucket = "kf_S3_logging"
+    force_destroy = true
+    tags {
+        Name        = "kf_S3_logging"
+    }
+    # logging {
+    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
+    #     target_prefix = "log/"
+    # }
 }
 
 resource "aws_key_pair" "kf_key_pair" {
@@ -255,7 +257,7 @@ resource "aws_instance" "kf_inst2" {
     }
 }
 
-output "ip" {
+output "elb_dns" {
  value = "${aws_elb.kf_elb.dns_name}"
 }
 
