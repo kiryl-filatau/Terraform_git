@@ -139,6 +139,7 @@ resource "aws_security_group" "kf_security_group" {
     }
 }
 
+#creating ELB
 resource "aws_elb" "kf_elb" {
     name = "kf-elb"
 
@@ -160,6 +161,7 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
+#creating S3 BUCKET
 resource "aws_s3_bucket" "kf_S3_logging" {
     bucket = "kf_S3_logging"
     force_destroy = true
@@ -172,6 +174,8 @@ resource "aws_s3_bucket" "kf_S3_logging" {
     # }
 }
 
+
+#creating S3 BUCKET POLICY
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
     bucket = "${aws_s3_bucket.kf_S3_logging.id}"
 
@@ -196,6 +200,7 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
 POLICY
 }
 
+#creating KEY PAIR
 resource "aws_key_pair" "kf_key_pair" {
     key_name   = "${var.key_name}"
     public_key = "${file(var.public_key_path)}"
