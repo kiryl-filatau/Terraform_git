@@ -160,6 +160,18 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
+resource "aws_s3_bucket" "kf_S3_logging" {
+    bucket = "kf_S3_logging"
+    force_destroy = true
+    tags {
+        Name        = "kf_S3_logging"
+    }
+    # logging {
+    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
+    #     target_prefix = "log/"
+    # }
+}
+
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
     bucket = "${aws_s3_bucket.kf_S3_logging.id}"
 
@@ -182,18 +194,6 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
   ]
 }
 POLICY
-}
-
-resource "aws_s3_bucket" "kf_S3_logging" {
-    bucket = "kf_S3_logging"
-    force_destroy = true
-    tags {
-        Name        = "kf_S3_logging"
-    }
-    # logging {
-    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
-    #     target_prefix = "log/"
-    # }
 }
 
 resource "aws_key_pair" "kf_key_pair" {
