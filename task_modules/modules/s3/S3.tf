@@ -3,15 +3,15 @@ variable "bucket_id"  {}
 
 #creating S3 BUCKET
 resource "aws_s3_bucket" "kf_S3_logging" {
-    bucket = "${var.bucket}"
+    bucket        = "${var.bucket}"
     force_destroy = true
 }
 
 
 #creating S3 BUCKET POLICY
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
-    bucket = "${var.bucket_id}"
-    policy =<<POLICY
+    bucket        = "${var.bucket_id}"
+    policy        =<<POLICY
 {
   "Id": "Policy1510836277408",
   "Version": "2012-10-17",
@@ -32,6 +32,4 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
 POLICY
 }
 
-output "bucket_id" {
-  value = "${aws_s3_bucket.kf_S3_logging.id}"
-}
+output "bucket_id" {value = "${aws_s3_bucket.kf_S3_logging.id}"}

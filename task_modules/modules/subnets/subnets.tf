@@ -8,27 +8,26 @@ variable "subnet2_az"   {default = "us-east-1b"}
 
 #creating SUBNET1
 resource "aws_subnet" "kf_public_subnet1" {
-    vpc_id = "${var.vpc_id}"
-    cidr_block = "${var.subnet1_cidr}"
+    vpc_id                  = "${var.vpc_id}"
+    cidr_block              = "${var.subnet1_cidr}"
     tags = {
-        "Name" = "${var.subnet1_name}"
+        "Name"              = "${var.subnet1_name}"
     }
     map_public_ip_on_launch = true
-    availability_zone = "${var.subnet1_az}"
+    availability_zone       = "${var.subnet1_az}"
 }
 
 #creating SUBNET2
 resource "aws_subnet" "kf_public_subnet2" {
-    vpc_id = "${var.vpc_id}"
-    cidr_block = "${var.subnet2_cidr}"
+    vpc_id                  = "${var.vpc_id}"
+    cidr_block              = "${var.subnet2_cidr}"
     tags = {
-        "Name" = "${var.subnet2_name}"
+        "Name"              = "${var.subnet2_name}"
     }
     map_public_ip_on_launch = true
-    availability_zone = "${var.subnet2_az}"
+    availability_zone       = "${var.subnet2_az}"
 }
 
-output "subnet_ids" {value = "${list(aws_subnet.kf_public_subnet1.id, aws_subnet.kf_public_subnet2.id)}"}
-#output "subnet_ids" {value = ["${aws_subnet.kf_public_subnet1.id}", "${aws_subnet.kf_public_subnet2.id}"]}
-output "subnet1_id" {value = "${aws_subnet.kf_public_subnet1.id}"}
-output "subnet2_id" {value = "${aws_subnet.kf_public_subnet2.id}"}
+output "subnet_ids" {value  = "${list(aws_subnet.kf_public_subnet1.id, aws_subnet.kf_public_subnet2.id)}"}
+output "subnet1_id" {value  = "${aws_subnet.kf_public_subnet1.id}"}
+output "subnet2_id" {value  = "${aws_subnet.kf_public_subnet2.id}"}

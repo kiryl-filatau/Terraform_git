@@ -4,13 +4,13 @@ variable "sg_name"  {default = "kf_securiry_group"}
 
 #creating SECURITY GROUP
 resource "aws_security_group" "kf_security_group" {
-    vpc_id = "${var.vpc_id}"
+    vpc_id          = "${var.vpc_id}"
 
     egress {
         protocol    = "-1"
         cidr_blocks = "${var.sg_cidr}"
-        from_port = "0"
-        to_port = "0"
+        from_port   = "0"
+        to_port     = "0"
     }
 
     ingress {
@@ -28,10 +28,10 @@ resource "aws_security_group" "kf_security_group" {
     }
 
     tags {
-        Name = "${var.sg_name}"
+        Name        = "${var.sg_name}"
     }
 }
 
 output "sg_id" {
-    value = "${aws_security_group.kf_security_group.id}"
+    value           = "${aws_security_group.kf_security_group.id}"
 }

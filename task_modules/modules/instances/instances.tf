@@ -9,27 +9,27 @@ variable "subnet_id_1"              {}
 variable "subnet_id_2"              {}
 
 resource "aws_key_pair" "kf_key_pair" {
-    key_name   = "${var.key_name}"
-    public_key = "${file(var.public_key_path)}"
+    key_name                = "${var.key_name}"
+    public_key              = "${file(var.public_key_path)}"
 }
 
 #creating INSTANCE1
 resource "aws_instance" "kf_inst1" {
-    key_name = "${var.key_name}"
+    key_name                = "${var.key_name}"
     connection = {
-        user = "${var.user}"
-        private_key = "${file(var.private_key_path)}"
+        user                = "${var.user}"
+        private_key         = "${file(var.private_key_path)}"
     }
-    ami           = "${var.ami}"
-    instance_type = "t2.micro"
+    ami                     = "${var.ami}"
+    instance_type           = "t2.micro"
     tags {  
-        Name = "kf_inst1"
+        Name                = "kf_inst1"
     }
-    vpc_security_group_ids = ["${var.sg_id}"]
-    subnet_id = "${var.subnet_id_1}"
+    vpc_security_group_ids  = ["${var.sg_id}"]
+    subnet_id               = "${var.subnet_id_1}"
     provisioner "file" {
-        source      = "modules/instances/html/nginx_homepage_1.html"
-        destination = "/home/ubuntu/nginx_homepage_1.html"
+        source              = "modules/instances/html/nginx_homepage_1.html"
+        destination         = "/home/ubuntu/nginx_homepage_1.html"
     } 
     provisioner "remote-exec" {
         inline = [
@@ -43,21 +43,21 @@ resource "aws_instance" "kf_inst1" {
 
 #creating INSTANCE2
 resource "aws_instance" "kf_inst2" {
-    key_name = "${var.key_name}"
+    key_name                = "${var.key_name}"
     connection = {
-        user = "ubuntu"
-        private_key = "${file(var.private_key_path)}"
+        user                = "ubuntu"
+        private_key         = "${file(var.private_key_path)}"
     }
-    ami           = "${var.ami}"
-    instance_type = "t2.micro"
+    ami                     = "${var.ami}"
+    instance_type           = "t2.micro"
     tags {  
-        Name = "kf_inst2"
+        Name                = "kf_inst2"
     }
-    vpc_security_group_ids = ["${var.sg_id}"]
-    subnet_id = "${var.subnet_id_2}"
+    vpc_security_group_ids  = ["${var.sg_id}"]
+    subnet_id               = "${var.subnet_id_2}"
     provisioner "file" {
-        source      = "modules/instances/html/nginx_homepage_2.html"
-        destination = "/home/ubuntu/nginx_homepage_2.html"
+        source              = "modules/instances/html/nginx_homepage_2.html"
+        destination         = "/home/ubuntu/nginx_homepage_2.html"
     }    
     provisioner "remote-exec" {
         inline = [
