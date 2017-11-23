@@ -67,6 +67,7 @@ module "kf_elb" {
     instances       = "${module.kf_instances.instances_ids}"
     bucket_elb      = "${var.bucket_elb}"
     interval        = "${var.interval}"
+    bucket_id       = "${module.kf_S3.bucket_id}"
 }
 
 module "kf_S3" {
@@ -87,4 +88,8 @@ module "kf_instances" {
     sg_id           = "${module.kf_sg.sg_id}"
     subnet_id_1     = "${module.kf_subnets.subnet1_id}"
     subnet_id_2     = "${module.kf_subnets.subnet2_id}"
+}
+
+output "elb_dns" {
+    value = "${module.kf_elb.elb_dns}"
 }

@@ -1,6 +1,8 @@
 variable "nacl_name"    {default = "kf_nacl" }
 variable "vpc_id"       {}
-variable "subnet_ids"   {}
+variable "subnet_ids"   {
+    type = "list"
+}
 variable "nacl_cidr"    {}
 
 #creating NACL

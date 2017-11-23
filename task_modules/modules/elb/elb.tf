@@ -1,9 +1,14 @@
 variable "elb_name"         {default = "kf-elb"}
-variable "subnets"          {}
+variable "subnets"          {
+    type = "list"
+}
 variable "security_groups"  {}
-variable "instances"        {}
+variable "instances"        {
+    type = "list"
+}
 variable "bucket_elb"       {default = "kf_S3_logging"}
 variable "interval"         {default = 5}
+variable "bucket_id"        {}
 
 #creating ELB
 resource "aws_elb" "kf_elb" {
