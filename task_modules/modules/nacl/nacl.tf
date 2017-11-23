@@ -1,7 +1,12 @@
+variable "nacl_name"    { default = "kf_nacl" }
+variable "vpc_id"       {}
+variable "subnet_ids"   {}
+variable "nacl_cidr"    {}
+
 #creating NACL
 resource "aws_network_acl" "kf_nacl" {
-    vpc_id = "${aws_vpc.kf_vpc.id}"
-    subnet_ids = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
+    vpc_id = "${var.vpc_id}"
+    subnet_ids = ["${var.subnet_ids}"]
     egress {
         protocol = "-1"
         rule_no = 100
@@ -43,3 +48,4 @@ resource "aws_network_acl" "kf_nacl" {
         Name = "${var.nacl_name}"
     }
 }
+

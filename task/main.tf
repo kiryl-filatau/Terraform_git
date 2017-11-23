@@ -22,6 +22,7 @@ resource "aws_internet_gateway" "kf_igw" {
 
 #creating NACL +
 resource "aws_network_acl" "kf_nacl" {
+    depends_on = ["aws_instance.kf_inst1", "aws_instance.kf_inst2"]
     vpc_id = "${aws_vpc.kf_vpc.id}"
     subnet_ids = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
     egress {
@@ -142,11 +143,10 @@ resource "aws_security_group" "kf_security_group" {
 #creating ELB
 resource "aws_elb" "kf_elb" {
     name = "kf-elb"
-
+    depends_on      = ["aws_s3_bucket_policy.kf_S3_logging", "aws_s3_bucket.kf_S3_logging"]
     subnets         = ["${aws_subnet.kf_public_subnet1.id}","${aws_subnet.kf_public_subnet2.id}"]
     security_groups = ["${aws_security_group.kf_security_group.id}"]
     instances       = ["${aws_instance.kf_inst1.id}","${aws_instance.kf_inst2.id}"]
-    depends_on      = ["aws_s3_bucket.kf_S3_logging"]
     cross_zone_load_balancing   = true
     access_logs {
         bucket        = "kf_S3_logging"
@@ -165,20 +165,13 @@ resource "aws_elb" "kf_elb" {
 resource "aws_s3_bucket" "kf_S3_logging" {
     bucket = "kf_S3_logging"
     force_destroy = true
-    tags {
-        Name        = "kf_S3_logging"
-    }
-    # logging {
-    #     target_bucket = "${aws_s3_bucket.kf_S3_logging.id}"
-    #     target_prefix = "log/"
-    # }
 }
 
 
 #creating S3 BUCKET POLICY
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
+    depends_on      = ["aws_s3_bucket.kf_S3_logging"]
     bucket = "${aws_s3_bucket.kf_S3_logging.id}"
-
     policy =<<POLICY
 {
   "Id": "Policy1510836277408",

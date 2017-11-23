@@ -3,3 +3,10 @@ task/terraform.tfstate*
 task/terraform.tfvars
 task/keys/*
 task/.*
+task/*.log
+task_modules/crash.log
+task_modules/terraform.tfstate*
+task_modules/terraform.tfvars
+task_modules/keys/*
+task_modules/.*
+task_modules/*.log
