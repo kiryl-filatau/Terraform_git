@@ -67,7 +67,8 @@ module "kf_elb" {
     instances       = "${module.kf_instances.instances_ids}"
     bucket_elb      = "${var.bucket_elb}"
     interval        = "${var.interval}"
-    bucket_id       = "${module.kf_S3.bucket_id}"
+    depends_bucket  = "${module.kf_S3.bucket_id}"
+    depends_policy  = "${module.kf_S3.bucket_policy_id}"
 }
 
 module "kf_S3" {

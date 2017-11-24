@@ -10,6 +10,7 @@ resource "aws_s3_bucket" "kf_S3_logging" {
 
 #creating S3 BUCKET POLICY
 resource "aws_s3_bucket_policy" "kf_S3_logging" {
+    depends_on    = ["aws_s3_bucket.kf_S3_logging"]
     bucket        = "${var.bucket_id}"
     policy        =<<POLICY
 {
@@ -32,4 +33,5 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
 POLICY
 }
 
-output "bucket_id" {value = "${aws_s3_bucket.kf_S3_logging.id}"}
+output "bucket_id"        {value = "${aws_s3_bucket.kf_S3_logging.id}"}
+output "bucket_policy_id" {value = "${aws_s3_bucket_policy.kf_S3_logging.id}"}

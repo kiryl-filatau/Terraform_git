@@ -8,7 +8,8 @@ variable "instances"        {
 }
 variable "bucket_elb"       {default = "kf_S3_logging"}
 variable "interval"         {default = 5}
-variable "bucket_id"        {}
+variable "depends_bucket"   {}
+variable "depends_policy"   {}
 
 #creating ELB
 resource "aws_elb" "kf_elb" {
@@ -29,5 +30,4 @@ resource "aws_elb" "kf_elb" {
     }
 }
 
-output "elb_dns" {value         = "${aws_elb.kf_elb.dns_name}"
-}
+output "elb_dns" {value         = "${aws_elb.kf_elb.dns_name}"}
