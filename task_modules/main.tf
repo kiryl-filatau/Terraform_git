@@ -65,10 +65,8 @@ module "kf_elb" {
     subnets         = "${module.kf_subnets.subnet_ids}"
     security_groups = "${module.kf_sg.sg_id}"
     instances       = "${module.kf_instances.instances_ids}"
-    bucket_elb      = "${var.bucket_elb}"
+    bucket_elb      = "${module.kf_S3.depends_on_bucket_policy}"
     interval        = "${var.interval}"
-    depends_bucket  = "${module.kf_S3.bucket_id}"
-    depends_policy  = "${module.kf_S3.bucket_policy_id}"
 }
 
 module "kf_S3" {

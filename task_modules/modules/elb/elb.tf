@@ -6,10 +6,8 @@ variable "security_groups"  {}
 variable "instances"        {
     type = "list"
 }
-variable "bucket_elb"       {default = "kf_S3_logging"}
+variable "bucket_elb"       {}
 variable "interval"         {default = 5}
-variable "depends_bucket"   {}
-variable "depends_policy"   {}
 
 #creating ELB
 resource "aws_elb" "kf_elb" {

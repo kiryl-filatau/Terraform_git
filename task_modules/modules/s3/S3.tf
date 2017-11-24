@@ -34,4 +34,6 @@ POLICY
 }
 
 output "bucket_id"        {value = "${aws_s3_bucket.kf_S3_logging.id}"}
-output "bucket_policy_id" {value = "${aws_s3_bucket_policy.kf_S3_logging.id}"}
+output "depends_on_bucket_policy" {
+  value = "${aws_s3_bucket_policy.kf_S3_logging.id}"
+}

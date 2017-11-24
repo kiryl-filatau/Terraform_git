@@ -256,9 +256,11 @@ resource "aws_instance" "kf_inst2" {
 }
 
 output "elb_dns" {
- value = "${aws_elb.kf_elb.dns_name}"
+    value = "${aws_elb.kf_elb.dns_name}"
 }
-
+output "S3_policy" {
+    value = "${aws_s3_bucket_policy.kf_S3_logging.id}"
+}
 
 
 

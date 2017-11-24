@@ -31,7 +31,6 @@ variable "sg_name"        {default = "kf_securiry_group"}
 
 #ELB variables
 variable "elb_name"       {default = "kf-elb"}
-variable "bucket_elb"     {default = "kf_S3_logging"}
 variable "interval"       {default = 5}
 
 #S3 variables
