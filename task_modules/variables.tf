@@ -47,5 +47,12 @@ variable "public_key_path" {
 variable "private_key_path" {
   default = "/home/kfilatau/EPAM/LEARN/Amazon/keys/N_Virginia_filatko.pem"
 }
+# variable "ami"            {default = "ami-da05a4a0"}
+# variable "user"           {default = "ubuntu"}
+
+#ASG variables
+variable "asg_name"       {default = "kf_asg"}
 variable "ami"            {default = "ami-da05a4a0"}
-variable "user"           {default = "ubuntu"}
+variable "instance_type"  {default = "t2.micro"}
+variable "min_size"       {default = 2}
+variable "max_size"       {default = 4}

@@ -64,7 +64,7 @@ module "kf_elb" {
     elb_name        = "${var.elb_name}"
     subnets         = "${module.kf_subnets.subnet_ids}"
     security_groups = "${module.kf_sg.sg_id}"
-    instances       = "${module.kf_instances.instances_ids}"
+#    instances       = "${module.kf_instances.instances_ids}"
     bucket_elb      = "${module.kf_S3.depends_on_bucket_policy}"
     interval        = "${var.interval}"
 }
@@ -76,18 +76,34 @@ module "kf_S3" {
     bucket_id       = "${module.kf_S3.bucket_id}"
 }
 
-module "kf_instances" {
-    source          = "./modules/instances"
+module "kf_asg" {
+    source = "./modules/asg"
 
-    key_name        = "${var.key_name}"
+    key_name = "${var.key_name}"
     public_key_path = "${var.public_key_path}"
-    private_key_path= "${var.private_key_path}"
-    ami             = "${var.ami}"
-    user            = "${var.user}"
-    sg_id           = "${module.kf_sg.sg_id}"
-    subnet_id_1     = "${module.kf_subnets.subnet1_id}"
-    subnet_id_2     = "${module.kf_subnets.subnet2_id}"
+    asg_name = "${var.asg_name}"
+    ami = "${var.ami}"
+    instance_type = "${var.instance_type}"
+    asg_sg = "${module.kf_sg.sg_id}"
+    min_size = "${var.min_size}"
+    max_size = "${var.max_size}"
+    load_balancers = "${module.kf_elb.elb_id}"
+    subnet_ids = "${module.kf_subnets.subnet_ids}"
+
 }
+
+# module "kf_instances" {
+#     source          = "./modules/instances"
+
+#     key_name        = "${var.key_name}"
+#     public_key_path = "${var.public_key_path}"
+#     private_key_path= "${var.private_key_path}"
+#     ami             = "${var.ami}"
+#     user            = "${var.user}"
+#     sg_id           = "${module.kf_sg.sg_id}"
+#     subnet_id_1     = "${module.kf_subnets.subnet1_id}"
+#     subnet_id_2     = "${module.kf_subnets.subnet2_id}"
+# }
 
 output "elb_dns" {
     value = "${module.kf_elb.elb_dns}"
