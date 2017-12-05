@@ -3,9 +3,9 @@ variable "subnets"          {
     type = "list"
 }
 variable "security_groups"  {}
-# variable "instances"        {
-#     type = "list"
-# }
+variable "instances"        {
+    type = "list"
+}
 variable "bucket_elb"       {}
 variable "interval"         {default = 5}
 
@@ -14,7 +14,7 @@ resource "aws_elb" "kf_elb" {
     name = "${var.elb_name}"
     subnets                     = ["${var.subnets}"]
     security_groups             = ["${var.security_groups}"]
- #   instances                   = ["${var.instances}"]
+    instances                   = ["${var.instances}"]
     cross_zone_load_balancing   = true
     access_logs {
         bucket                  = "${var.bucket_elb}"
