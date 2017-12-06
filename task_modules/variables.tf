@@ -50,6 +50,8 @@ variable "private_key_path" {
 variable "ami"            {default = "ami-da05a4a0"}
 variable "user"           {default = "ubuntu"}
 variable "user_pem"       {default = "/home/kfilatau/EPAM/LEARN/Chef/chef_git/.chef/filatoff.pem"}
+variable "chef_node_name" {default = "kf_tf_test"}
+
 
 # #ASG variables
 # variable "asg_name"       {default = "kf_asg"}
