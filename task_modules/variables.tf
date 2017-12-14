@@ -51,7 +51,7 @@ variable "ami"            {default = "ami-da05a4a0"}
 variable "user"           {default = "ubuntu"}
 variable "user_pem"       {default = "/home/kfilatau/EPAM/LEARN/Chef/chef_git/.chef/filatoff.pem"}
 variable "chef_node_name" {default = "kf_tf_test"}
-
+# variable "ansible_private_key" {default = "/home/kfilatau/EPAM/LEARN/Ansible/N_Virginia_filatko.pem"}
 
 # #ASG variables
 # variable "asg_name"       {default = "kf_asg"}

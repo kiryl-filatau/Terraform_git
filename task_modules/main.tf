@@ -102,10 +102,11 @@ module "kf_instances" {
     user            = "${var.user}"
     sg_id           = "${module.kf_sg.sg_id}"
     subnet_id_1     = "${module.kf_subnets.subnet1_id}"
-    #subnet_id_2     = "${module.kf_subnets.subnet2_id}"
+    subnet_id_2     = "${module.kf_subnets.subnet2_id}"
     # data_bag_secret_path = "${var.data_bag_secret_path}"
     user_pem        = "${var.user_pem}"
     chef_node_name  = "${var.chef_node_name}"
+    # ansible_private_key = "${var.ansible_private_key}"
 }
 
 output "elb_dns" {
