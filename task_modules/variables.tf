@@ -42,7 +42,7 @@ variable "key_name" {
   default = "N_Virginia_filatko"
 }
 variable "public_key_path" {
-  default = "/home/kfilatau/EPAM/LEARN/Terraform/Terraform_task/task_modules/keys/N_Virginia_filatko.pub"
+  default = "/home/kfilatau/EPAM/LEARN/Terraform/Terraform_git/task_modules/keys/N_Virginia_filatko.pub"
 }
 variable "private_key_path" {
   default = "/home/kfilatau/EPAM/LEARN/Amazon/keys/N_Virginia_filatko.pem"

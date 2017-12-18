@@ -29,7 +29,11 @@ variable "key_name" {
     default         = "N_Virginia_filatko"
 }
 variable "public_key_path" {
+<<<<<<< HEAD
+  default           = "/home/kfilatau/EPAM/LEARN/Terraform/Terraform_git/task_modules/keys/N_Virginia_filatko.pub"
+=======
   default           = "/home/kfilatau/EPAM/LEARN/Terraform/Terraform_task/task_modules/keys/N_Virginia_filatko.pub"
+>>>>>>> e30b2a19e8e1e106b5d5af6186dba8f29e7d4b71
 }
 variable "subnet_ids" {
     type            = "list"
