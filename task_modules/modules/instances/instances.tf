@@ -115,15 +115,13 @@ resource "aws_instance" "kf_inst3" {
     }
     vpc_security_group_ids  = ["${var.sg_id}"]
     subnet_id               = "${var.subnet_id_2}"
-<<<<<<< HEAD
     # provisioner "remote-exec" {
     #     inline = [
     #         "sudo apt -y update && sudo apt install -y python-minimal"
     #     ]
     # }
-    provisioner "local-exec" {
-        command = "cd /home/kfilatau/EPAM/LEARN/Ansible/Ansible_git/; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
-=======
+    # provisioner "local-exec" {
+    #     command = "cd /home/kfilatau/EPAM/LEARN/Ansible/Ansible_git/; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
     provisioner "remote-exec" {
         inline = [
             "sudo apt -y update && sudo apt install -y python-minimal"
@@ -131,8 +129,7 @@ resource "aws_instance" "kf_inst3" {
         
     }
     provisioner "local-exec" {
-        command = "cd /home/kfilatau/EPAM/LEARN/Ansible; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
->>>>>>> e30b2a19e8e1e106b5d5af6186dba8f29e7d4b71
+        command = "cd /home/kfilatau/EPAM/LEARN/Ansible/Ansible_git/; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
     }
 }
 
