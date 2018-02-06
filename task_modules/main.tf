@@ -79,16 +79,16 @@ module "kf_S3" {
 # module "kf_asg" {
 #     source = "./modules/asg"
 
-#     key_name = "${var.key_name}"
+#     key_name        = "${var.key_name}"
 #     public_key_path = "${var.public_key_path}"
-#     asg_name = "${var.asg_name}"
-#     ami = "${var.ami}"
-#     instance_type = "${var.instance_type}"
-#     asg_sg = "${module.kf_sg.sg_id}"
-#     min_size = "${var.min_size}"
-#     max_size = "${var.max_size}"
-#     load_balancers = "${module.kf_elb.elb_id}"
-#     subnet_ids = "${module.kf_subnets.subnet_ids}"
+#     asg_name        = "${var.asg_name}"
+#     ami             = "${var.ami}"
+#     instance_type   = "${var.instance_type}"
+#     asg_sg          = "${module.kf_sg.sg_id}"
+#     min_size        = "${var.min_size}"
+#     max_size        = "${var.max_size}"
+#     load_balancers  = "${module.kf_elb.elb_id}"
+#     subnet_ids      = "${module.kf_subnets.subnet_ids}"
 
 # }
 
@@ -110,5 +110,5 @@ module "kf_instances" {
 }
 
 output "elb_dns" {
-    value = "${module.kf_elb.elb_dns}"
+    value           = "${module.kf_elb.elb_dns}"
 }
