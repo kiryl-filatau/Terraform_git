@@ -1,4 +1,4 @@
-variable "bucket"     {default = "kf_S3_logging"}
+variable "bucket"     {default = "kf_s3_logging"}
 variable "bucket_id"  {}
 
 #creating S3 BUCKET
@@ -21,7 +21,7 @@ resource "aws_s3_bucket_policy" "kf_S3_logging" {
       "Sid": "Stmt1510836271067",
       "Action": "s3:*",
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::kf_S3_logging/*",
+      "Resource": "arn:aws:s3:::kf-s3-logging-test/*",
       "Principal": {
         "AWS": [
           "127311923021"

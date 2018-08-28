@@ -34,7 +34,7 @@ variable "elb_name"       {default = "kf-elb"}
 variable "interval"       {default = 5}
 
 #S3 variables
-variable "bucket"         {default = "kf_S3_logging"}
+variable "bucket"         {default = "kf-s3-logging-test"}
 
 
 #vars for instance
