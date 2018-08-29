@@ -42,14 +42,14 @@ variable "key_name" {
   default = "N_Virginia_filatko"
 }
 variable "public_key_path" {
-  default = "/home/kfilatau/EPAM/LEARN/Terraform/Terraform_git/task_modules/keys/N_Virginia_filatko.pub"
+  default = "/home/kfilatau/LEARN/Terraform/Terraform_git/task_modules/keys/N_Virginia_filatko.pub"
 }
 variable "private_key_path" {
-  default = "/home/kfilatau/EPAM/LEARN/Amazon/keys/N_Virginia_filatko.pem"
+  default = "/home/kfilatau/LEARN/Amazon/keys/N_Virginia_filatko.pem"
 }
 variable "ami"            {default = "ami-da05a4a0"}
 variable "user"           {default = "ubuntu"}
-variable "user_pem"       {default = "/home/kfilatau/EPAM/LEARN/Chef/chef_git/.chef/filatoff.pem"}
+variable "user_pem"       {default = "/home/kfilatau/LEARN/Chef/chef_git/.chef/filatoff.pem"}
 variable "chef_node_name" {default = "kf_tf_test"}
 # variable "ansible_private_key" {default = "/home/kfilatau/EPAM/LEARN/Ansible/N_Virginia_filatko.pem"}
 

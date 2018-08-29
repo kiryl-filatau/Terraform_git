@@ -68,7 +68,7 @@ resource "aws_instance" "kf_inst1" {
       }
       provisioner "local-exec" {
         when = "destroy"
-        command = "cd /home/kfilatau/EPAM/LEARN/Chef/chef_git/; knife node delete ${format("%s-%02d", var.chef_node_name, count.index+1)} -y; knife client delete ${format("%s-%02d", var.chef_node_name, count.index+1)} -y"
+        command = "cd /home/kfilatau/LEARN/Chef/chef_git/; knife node delete ${format("%s-%02d", var.chef_node_name, count.index+1)} -y; knife client delete ${format("%s-%02d", var.chef_node_name, count.index+1)} -y"
       }
       count             = 2
 }
@@ -129,7 +129,7 @@ resource "aws_instance" "kf_inst3" {
         
     }
     provisioner "local-exec" {
-        command = "cd /home/kfilatau/EPAM/LEARN/Ansible/Ansible_git/; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
+        command = "cd /home/kfilatau/LEARN/Ansible/Ansible_git/; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key './N_Virginia_filatko.pem' -i '${aws_instance.kf_inst3.public_ip},' main.yml"
     }
 }
 
