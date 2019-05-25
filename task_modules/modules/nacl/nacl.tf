@@ -46,7 +46,7 @@ resource "aws_network_acl" "kf_nacl" {
         to_port     = 65535
     }
 
-    tags {
+    tags = {
         Name        = "${var.nacl_name}"
     }
 }

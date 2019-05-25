@@ -27,7 +27,7 @@ resource "aws_security_group" "kf_security_group" {
         to_port     = 80
     }
 
-    tags {
+    tags = {
         Name        = "${var.sg_name}"
     }
 }

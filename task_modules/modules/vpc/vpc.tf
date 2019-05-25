@@ -4,7 +4,7 @@ variable "vpc_cidr" {default = "10.0.0.0/16"}
 #creating VPC 
 resource "aws_vpc" "kf_vpc" {
     cidr_block  = "${var.vpc_cidr}"
-    tags {
+    tags = {
         Name    = "${var.vpc_name}"
     }
 }

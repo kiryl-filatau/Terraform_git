@@ -28,6 +28,6 @@ resource "aws_subnet" "kf_public_subnet2" {
     availability_zone       = "${var.subnet2_az}"
 }
 
-output "subnet_ids" {value  = "${list(aws_subnet.kf_public_subnet1.id, aws_subnet.kf_public_subnet2.id)}"}
+output "subnet_ids" {value  = ["${aws_subnet.kf_public_subnet1.id}", "${aws_subnet.kf_public_subnet2.id}"]}
 output "subnet1_id" {value  = "${aws_subnet.kf_public_subnet1.id}"}
 output "subnet2_id" {value  = "${aws_subnet.kf_public_subnet2.id}"}

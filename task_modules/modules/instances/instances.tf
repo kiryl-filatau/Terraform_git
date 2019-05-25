@@ -20,13 +20,15 @@ resource "aws_key_pair" "kf_key_pair" {
 #creating INSTANCE1
 resource "aws_instance" "kf_inst1" {
     key_name                = "${var.key_name}"
-    connection = {
+    connection {
+        host                = self.public_ip
+        type                = "ssh"
         user                = "${var.user}"
         private_key         = "${file(var.private_key_path)}"
     }
     ami                     = "${var.ami}"
     instance_type           = "t2.micro"
-    tags {  
+    tags = {  
         Name                = "kf_inst1"
     }
     vpc_security_group_ids  = ["${var.sg_id}"]
@@ -76,13 +78,15 @@ resource "aws_instance" "kf_inst1" {
 #creating INSTANCE2
 resource "aws_instance" "kf_inst2" {
     key_name                = "${var.key_name}"
-    connection = {
+    connection {
+        host                = self.public_ip
+        type                = "ssh"
         user                = "ubuntu"
         private_key         = "${file(var.private_key_path)}"
     }
     ami                     = "${var.ami}"
     instance_type           = "t2.micro"
-    tags {  
+    tags = {  
         Name                = "kf_inst2"
     }
     vpc_security_group_ids  = ["${var.sg_id}"]
@@ -104,13 +108,15 @@ resource "aws_instance" "kf_inst2" {
 #creating INSTANCE3
 resource "aws_instance" "kf_inst3" {
     key_name                = "${var.key_name}"
-    connection = {
+    connection {
+        host                = self.public_ip
+        type                = "ssh"
         user                = "ubuntu"
         private_key         = "${file(var.private_key_path)}"
     }
     ami                     = "${var.ami}"
     instance_type           = "t2.micro"
-    tags {  
+    tags = {  
         Name                = "kf_inst3"
     }
     vpc_security_group_ids  = ["${var.sg_id}"]
